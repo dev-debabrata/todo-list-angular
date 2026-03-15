@@ -1,12 +1,23 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [FormsModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
-  protected readonly title = signal('todo-list-angular');
+  task = '';
+  taskList: { id: number; name: string }[] = [];
+
+  addTask() {
+    this.taskList.push({ id: this.taskList.length + 1, name: this.task });
+
+    this.task = '';
+  }
+
+  deleteTask(id: number) {
+    this.taskList = this.taskList.filter((item) => item.id != id);
+  }
 }
